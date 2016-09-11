@@ -245,12 +245,13 @@ def loaddeposit(sources, depid):
         invenio dumps loaddeposit ~/data/deposit_dump_*.json
         invenio dumps loaddeposit -d 12345 ~/data/deposit_dump_*.json
     """
-    from .tasks.deposit import load_deposit
+    from .tasks.deposit import import_deposit
     if depid is not None:
-        pred = lambda dep: int(dep["_p"]["id"]) == depid
-        loadcommon(sources, load_deposit, predicate=pred, asynchronous=False)
+        def pred(dep):
+            return int(dep["_p"]["id"]) == depid
+        loadcommon(sources, import_deposit, predicate=pred, asynchronous=False)
     else:
-        loadcommon(sources, load_deposit)
+        loadcommon(sources, import_deposit)
 
 
 @dumps.command()

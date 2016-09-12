@@ -214,6 +214,7 @@ class DepositDumpLoader(object):
                 record_bucket.locked = True
                 db.session.add(RecordsBuckets(
                     record_id=recid.object_uuid, bucket_id=record_bucket.id))
+                record.setdefault('_buckets', {})
                 record['_buckets']['record'] = str(record_bucket.id)
 
             deposit['_n']['_buckets']['record'] = record['_buckets']['record']
